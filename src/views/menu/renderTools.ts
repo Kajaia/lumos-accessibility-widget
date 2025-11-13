@@ -1,6 +1,4 @@
-import { 
-    userSettings
-} from '@/globals/userSettings';
+import { userSettings } from "@/globals/userSettings";
 
 import stopAnimations from "@/tools/stopAnimations";
 import readableFont from "@/tools/readableFont";
@@ -11,20 +9,23 @@ import highlightLinks from "@/tools/highlightLinks";
 import adjustLetterSpacing from "@/tools/adjustLetterSpacing";
 import adjustLineHeight from "@/tools/adjustLineHeight";
 import adjustFontWeight from "@/tools/adjustFontWeight";
+import screenReader from "@/tools/screenReader";
 
 export default function renderTools() {
-    const states = userSettings?.states;
+  const states = userSettings?.states;
 
-    highlightTitle(states['highlight-title']);
-    highlightLinks(states['highlight-links']);
+  highlightTitle(states["highlight-title"]);
+  highlightLinks(states["highlight-links"]);
 
-    adjustLetterSpacing(states['letter-spacing']);
-    adjustLineHeight(states['line-height']);
-    adjustFontWeight(states['font-weight']);
+  adjustLetterSpacing(states["letter-spacing"]);
+  adjustLineHeight(states["line-height"]);
+  adjustFontWeight(states["font-weight"]);
 
-    readableFont(states['readable-font']);
+  readableFont(states["readable-font"]);
 
-    readingGuide(states['readable-guide']);
-    stopAnimations(states['stop-animations']);
-    bigCursor(states['big-cursor']);
+  readingGuide(states["readable-guide"]);
+  stopAnimations(states["stop-animations"]);
+  bigCursor(states["big-cursor"]);
+
+  screenReader(states["screen-reader"]);
 }
