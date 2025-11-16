@@ -1,7 +1,11 @@
+import { getSavedUserSettings } from "@/globals/userSettings";
+
 export default async function tts(text, { onPlay, onEnd } = {}) {
   if (!text) return;
 
   const baseURL = "";
+
+  const userSettings = getSavedUserSettings();
 
   try {
     const res = await fetch(`${baseURL}/api/tts/`, {
@@ -10,7 +14,7 @@ export default async function tts(text, { onPlay, onEnd } = {}) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text, locale: userSettings?.lang || "en" }),
     });
 
     if (!res.ok) throw new Error("TTS API not working.");
@@ -18,7 +22,7 @@ export default async function tts(text, { onPlay, onEnd } = {}) {
     const { audio_url } = await res.json();
 
     if (audio_url) {
-      const audio = new Audio(`${baseURL}${audio_url}`);
+      const audio = new Audio(audio_url);
       onPlay?.(audio);
       audio.addEventListener("ended", () => onEnd?.());
       await audio.play();
