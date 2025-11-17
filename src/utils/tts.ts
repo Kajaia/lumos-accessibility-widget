@@ -3,7 +3,7 @@ import { getSavedUserSettings } from "@/globals/userSettings";
 export default async function tts(text, { onPlay, onEnd } = {}) {
   if (!text) return;
 
-  const baseURL = "";
+  const baseURL = "https://tts.geoevents.ge";
 
   const userSettings = getSavedUserSettings();
 
