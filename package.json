@@ -2,9 +2,9 @@
   "name": "lumos-accessibility",
   "version": "1.0.0",
   "description": "Lumos: Accessibility Website Widget",
-  "main": "dist/lumos-accessibility.cjs.js",
-  "module": "dist/lumos-accessibility.esm.js",
-  "unpkg": "dist/lumos-accessibility.umd.js",
+  "main": "public/dist/lumos-accessibility.cjs.js",
+  "module": "public/dist/lumos-accessibility.esm.js",
+  "unpkg": "public/dist/lumos-accessibility.umd.js",
   "scripts": {
     "watch": "node esbuild.config.js --watch",
     "build": "node esbuild.config.js --minify",

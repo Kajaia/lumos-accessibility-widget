@@ -59,11 +59,11 @@ const baseConfig = {
 
 // Build targets
 const targets = {
-  esm: { format: "esm", outfile: "dist/lumos-accessibility.esm.js" },
-  cjs: { format: "cjs", outfile: "dist/lumos-accessibility.cjs.js" },
+  esm: { format: "esm", outfile: "public/dist/lumos-accessibility.esm.js" },
+  cjs: { format: "cjs", outfile: "public/dist/lumos-accessibility.cjs.js" },
   umd: {
     format: "iife",
-    outfile: "dist/lumos-accessibility.umd.js",
+    outfile: "public/dist/lumos-accessibility.umd.js",
     globalName: "LumosAccessibility",
   },
 };
