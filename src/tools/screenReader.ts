@@ -26,6 +26,7 @@ const allowedElements = [
   "ABBR",
   "UL",
   "LI",
+  "SPAN",
 ];
 
 let mouseOverHandler = null;
