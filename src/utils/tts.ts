@@ -1,7 +1,7 @@
 import { getSavedUserSettings } from "@/globals/userSettings";
 
-export default async function tts(text, { onPlay, onEnd } = {}) {
-  if (!text) return;
+export async function fetchAudio(text, gender = "male") {
+  if (!text) return null;
 
   const baseURL = "https://tts.geoevents.ge";
 
@@ -14,7 +14,11 @@ export default async function tts(text, { onPlay, onEnd } = {}) {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ text, locale: userSettings?.lang || "en" }),
+      body: JSON.stringify({
+        text,
+        locale: userSettings?.lang || "en",
+        gender,
+      }),
     });
 
     if (!res.ok) throw new Error("TTS API not working.");
@@ -23,14 +27,18 @@ export default async function tts(text, { onPlay, onEnd } = {}) {
 
     if (audio_url) {
       const audio = new Audio(audio_url);
-      onPlay?.(audio);
-      audio.addEventListener("ended", () => onEnd?.());
-      await audio.play();
+
+      await new Promise((resolve, reject) => {
+        audio.oncanplaythrough = resolve;
+        audio.onerror = reject;
+      });
+
       return audio;
     } else {
-      throw new Error("Can't play audio file.");
+      throw new Error("Missing audio URL.");
     }
   } catch (error) {
     console.error("TTS error:", error);
+    return null;
   }
 }

@@ -1,4 +1,4 @@
-import tts from "@/utils/tts";
+import { fetchAudio } from "@/utils/tts";
 
 const allowedElements = [
   "H1",
@@ -33,6 +33,16 @@ let mouseOverHandler = null;
 let currentAudio = null;
 
 export default function screenReader(enable = false) {
+  // Gender radio
+  let gender = "male";
+  const genderEls = document.querySelectorAll('input[name="gender"]');
+
+  genderEls.forEach((el) => {
+    el.addEventListener("change", (e) => {
+      gender = e.target.value;
+    });
+  });
+
   if (enable) {
     if (mouseOverHandler) return;
 
@@ -64,10 +74,20 @@ export default function screenReader(enable = false) {
         currentAudio = null;
       }
 
-      currentAudio = await tts(text, {
-        onPlay: (audio) => (currentAudio = audio),
-        onEnd: () => (currentAudio = null),
-      });
+      const audio = await fetchAudio(text, gender);
+
+      if (!audio) return;
+
+      currentAudio = audio;
+
+      audio.addEventListener("ended", () => (currentAudio = null));
+
+      try {
+        await audio.play();
+      } catch (playError) {
+        console.error("Error attempting to play audio:", playError);
+        currentAudio = null;
+      }
     };
 
     document.addEventListener("mouseover", mouseOverHandler);
