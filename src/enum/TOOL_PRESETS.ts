@@ -19,9 +19,9 @@ export default [
     key: "readable-guide",
     icon: readingGuideIcon,
   },
-  {
-    label: "Screen Reader",
-    key: "screen-reader",
-    icon: screenReaderIcon,
-  },
+  // {
+  //   label: "Screen Reader",
+  //   key: "screen-reader",
+  //   icon: screenReaderIcon,
+  // },
 ];
