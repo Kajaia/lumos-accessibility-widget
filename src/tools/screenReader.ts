@@ -1,4 +1,4 @@
-import { fetchAudio } from "@/utils/tts";
+import tts from "@/utils/tts";
 
 const allowedElements = [
   "H1",
@@ -74,20 +74,10 @@ export default function screenReader(enable = false) {
         currentAudio = null;
       }
 
-      const audio = await fetchAudio(text, gender);
-
-      if (!audio) return;
-
-      currentAudio = audio;
-
-      audio.addEventListener("ended", () => (currentAudio = null));
-
-      try {
-        await audio.play();
-      } catch (playError) {
-        console.error("Error attempting to play audio:", playError);
-        currentAudio = null;
-      }
+      currentAudio = await tts(text, gender, {
+        onPlay: (audio) => (currentAudio = audio),
+        onEnd: () => (currentAudio = null),
+      });
     };
 
     document.addEventListener("mouseover", mouseOverHandler);
